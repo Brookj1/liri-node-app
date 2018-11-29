@@ -9,12 +9,7 @@ var request = require("request");
 var moment = require("moment");
 var axios = require("axios");
 
-// var spotify = new Spotify({
-//     id: keys.spotify.id,
-//     secret: keys.spotify.secret
-// });
-
-//if/else statements to hanlde the different user inputs 
+//if/else statements to handle the different user inputs 
 if (process.argv[2] == 'concert-this') {
 
     var artist = process.argv.slice(3).join(" ")
