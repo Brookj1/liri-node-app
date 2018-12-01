@@ -8,6 +8,7 @@ var cTable = require("console.table");
 var request = require("request");
 var moment = require("moment");
 var axios = require("axios");
+var fs = require("fs");
 
 //if/else statements to handle the different user inputs 
 if (process.argv[2] == 'concert-this') {
@@ -55,7 +56,7 @@ if (process.argv[2] == 'concert-this') {
 
     }
 
-    spotify.search({ type: 'track', query: songName, limit: 10 }, function (err, data) {
+    spotify.search({ type: 'track', query: songName, limit: 1 }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
@@ -116,13 +117,51 @@ if (process.argv[2] == 'concert-this') {
     }
 
 } else if (process.argv[2] == 'do-what-it-says') {
-    console.log('do what it says')
-}
+    // console.log('do what it says')
+    var fs = require("fs");
+    //Read random.txt file
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error)
+        }
+        // console.log(data);
+        //split the data from the random.txt file into two array items
+        var data;
+        data = data.split(","); 
+        var search = data[0]; //the command(spotify-this-song, concert-this, or movie-this)
+        var userInput = data[1]; //the thing the user is searching for (song title, band name, or movie title)
+        // console.log(search + userInput);
 
-// spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
-//     if (err) {
-//     return console.log('Error occurred: ' + err);
-// }
+        if (search == "spotify-this-song") {
+            // console.log("this works");
+            spotify.search({ type: 'track', query: userInput, limit: 1 }, function (err, data) {
+                if (err) {
+                    return console.log('Error occurred: ' + err);
+                }
+        
+                var tableArray = [];
+        
+                for (var i = 0; i < data.tracks.items.length; i++) {
+                    var result = {
+                        artist: data.tracks.items[i].album.artists[0].name,
+                        album_name: data.tracks.items[i].album.name,
+                        song_name: data.tracks.items[i].name,
+                        preview_url: data.tracks.items[i].preview_url
+                    }
+                    tableArray.push(result);
+                }
+                var table = cTable.getTable(tableArray);
+        
+                console.log(table);
+            });
+        };
+    })
+};
+ 
 
-// console.log(data); 
-// });
+
+
+
+
+
+    
