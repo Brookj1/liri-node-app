@@ -32,7 +32,7 @@ if (process.argv[2] == 'concert-this') {
     var songName = process.argv.slice(3).join(" ");
     //if the song name is left blank, default to this silly song...
     if (!songName) {
-        songName = "The sign by Ace of Base";
+        songName = "The sign + Ace of Base";
     }
     //if the song name is entered, query it via the spotify API and return one result
     spotify.search({ type: 'track', query: songName, limit: 1 }, function (err, data) {
@@ -66,31 +66,31 @@ if (process.argv[2] == 'concert-this') {
         axios.get(queryUrl).then(
 
             function (response) {
-                console.log(queryUrl);
+                //console.log(queryUrl);
                 // console.log(response.data);
-                console.log("Title :" + response.data.Title);
-                console.log("Year :" + response.data.Released);
-                console.log("IMDB Rating :" + response.data.imdbRating);
-                console.log("Rotten Tomatoes :" + response.data.Ratings[1].Value);
-                console.log("Country :" + response.data.Country);
-                console.log("Language :" + response.data.Language);
-                console.log("Movie Plot :" + response.data.Plot);
-                console.log("Actors :" + response.data.Actors);
+                console.log("Title:" + response.data.Title);
+                console.log("Year:" + response.data.Released);
+                console.log("IMDB Rating:" + response.data.imdbRating);
+                console.log("Rotten Tomatoes:" + response.data.Ratings[1].Value);
+                console.log("Country:" + response.data.Country);
+                console.log("Language:" + response.data.Language);
+                console.log("Movie Plot:" + response.data.Plot);
+                console.log("Actors:" + response.data.Actors);
 
             });
     } else {
         axios.get(queryUrl).then(
             function (response) {
-                console.log(movieName);
+                // console.log(movieName);
                 // console.log(response.data);
-                console.log("Title :" + response.data.Title);
-                console.log("Year :" + response.data.Released);
-                console.log("IMDB Rating :" + response.data.imdbRating);
-                console.log("Rotten Tomatoes :" + response.data.Ratings[1].Value);
-                console.log("Country :" + response.data.Country);
-                console.log("Language :" + response.data.Language);
-                console.log("Movie Plot :" + response.data.Plot);
-                console.log("Actors :" + response.data.Actors);
+                console.log("Title:" + response.data.Title);
+                console.log("Year:" + response.data.Released);
+                console.log("IMDB Rating:" + response.data.imdbRating);
+                console.log("Rotten Tomatoes:" + response.data.Ratings[1].Value);
+                console.log("Country:" + response.data.Country);
+                console.log("Language:" + response.data.Language);
+                console.log("Movie Plot:" + response.data.Plot);
+                console.log("Actors:" + response.data.Actors);
 
             });
     }
