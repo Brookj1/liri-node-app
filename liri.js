@@ -11,6 +11,7 @@ var axios = require("axios");
 var fs = require("fs");
 
 //if/else statements to handle the different user inputs 
+//concert-this
 if (process.argv[2] == 'concert-this') {
 
     var artist = process.argv.slice(3).join(" ")
@@ -25,37 +26,15 @@ if (process.argv[2] == 'concert-this') {
         console.log("Venue location: " + result.venue.city);
         console.log("Date of Event: " + moment(result.datetime).format("MM/DD/YYYY"));
     });
-
+//spotify-this-song
 } else if (process.argv[2] == 'spotify-this-song') {
 
     var songName = process.argv.slice(3).join(" ");
-
+    //if the song name is left blank, default to this silly song...
     if (!songName) {
         songName = "The sign by Ace of Base";
-        spotify.search({ type: 'track', query: songName, limit: 10 }, function (err, data) {
-            if (err) {
-                return console.log('Error occurred: ' + err);
-            }
-
-            var tableArray = [];
-
-            for (var i = 0; i < data.tracks.items.length; i++) {
-                var result = {
-                    artist: data.tracks.items[i].album.artists[0].name,
-                    album_name: data.tracks.items[i].album.name,
-                    song_name: data.tracks.items[i].name,
-                    preview_url: data.tracks.items[i].preview_url
-                }
-                tableArray.push(result);
-            }
-            var table = cTable.getTable(tableArray);
-
-            console.log(table);
-        });
-
-
     }
-
+    //if the song name is entered, query it via the spotify API and return one result
     spotify.search({ type: 'track', query: songName, limit: 1 }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
@@ -76,11 +55,11 @@ if (process.argv[2] == 'concert-this') {
 
         console.log(table);
     });
-
+//movie-this
 } else if (process.argv[2] == 'movie-this') {
     var movieName = String(process.argv.slice(3));
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=de92683e";
-
+    //if the movie name is left blank, default to Mr. Nobody
     if (!movieName) {
         movieName = "Mr. Nobody";
         queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=de92683e";
@@ -115,7 +94,7 @@ if (process.argv[2] == 'concert-this') {
 
             });
     }
-
+//do-what-it-says: read random.txt file, retrieve the information
 } else if (process.argv[2] == 'do-what-it-says') {
     // console.log('do what it says')
     var fs = require("fs");
